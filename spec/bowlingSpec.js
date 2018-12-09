@@ -17,20 +17,36 @@ describe('Game', function(){
 	it('Score the first frame!', function(){
 		bowling.score(1,3);
 		bowling.score(4,2);
-		expect(bowling.totalScore()).toEqual(10);
-		expect(bowling.getCurrentFrame()).toEqual(2);
+		bowling.score(3,2);
+		expect(bowling.totalScore()).toEqual(15);
+		expect(bowling.getCurrentFrame()).toEqual(3);
 	});
 
 	it('Validating an score of X', function(){
-		bowling.score(0,10);
+		bowling.score(10,0);
 		bowling.score(5,5);
 		expect(bowling.totalScore()).toEqual(20);
 	});
 
-	it('Score an spare an returning bonus!', function(){
+	it('Score an spare an returning total bonus!', function(){
+		bowling.score(5,5);
+		bowling.score(4,4);
+		bowling.score(3,7);
+		bowling.score(4,6)
+		bowling.score(2,2)
+		expect(bowling.bonus()).toEqual(10)
+	});
+
+	it('Score an spare an returning bonus total and the frame where was!', function(){
 		bowling.score(5,5);
 		bowling.score(10,0);
-		bowling.score(1,2);
-		expect(bowling.bonus()).toEqual(11)
+		console.log(bowling.bonusPerframe[0,0]);
+	});
+
+	it('Can have a perfect game', function(){
+		bowling.score(5,0)
+		bowling.score(2,3)
+		bowling.score(10)
+		expect(bowling.totalScore()).toEqual(300);
 	});
 });

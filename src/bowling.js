@@ -8,6 +8,7 @@ function Bowling() {
 	this.bono = 0;
 	this.currentFrame = 0;
 	this.validationScore = 0;
+	this.test = 0;
 }
 
 Bowling.prototype.getCurrentFrame = function() {
@@ -16,10 +17,9 @@ Bowling.prototype.getCurrentFrame = function() {
 
 Bowling.prototype.totalScore = function() {
 	for (var i = 0; i < this.points.length; i++) {
-		for (var j = 0; j < this.points.length; j++) {
-			this.total += this.points[i][j];
+			this.total += this.points[i]["value1"];
+			this.total += this.points[i]["value2"];
 
-		}
 	}
 	return this.total;
 };
@@ -32,24 +32,27 @@ Bowling.prototype.score = function(shot_1 = 0 , shot_2 = 0 ) {
 		return 'Invalid rolls!';
 	}
 	if (shot_1 === this.totalRolls) {
-		this.points.push([shot_1, 0]);
+		this.points.push({Frame: this.currentFrame, value1: shot_1, value2: 0, bonus: 0});
+		return;
 	}
 	if (shot_2 === this.totalRolls) {
-		this.points.push([0, shot_2]);
+		this.points.push({Frame: this.currentFrame, value1: 0, value2: shot_2, bonus: 0});
+		return;
 	}else {
-		this.points.push([shot_1, shot_2]);
+		this.points.push({Frame: this.currentFrame, value1: shot_1, value2: shot_2, bonus: 0});
 	}
 };
 
 Bowling.prototype.bonus = function() {
 	for (var i = 0; i < this.points.length; i++) {
-		for (var j = 0; j < this.points.length; j++) {
-			this.total += this.points[i][j];
-			if (this.points[i][j] === this.totalRolls) {
-				this.bono += this.points[i+1][j];
-				this.bonusPerframe.push([this.currentFrame, this.points[i][j+1]]);
-			}
+		this.test = 0;
+		this.test += this.points[i]["value1"];
+		this.test += this.points[i]["value2"];
+		if (this.test === this.totalRolls) {
+			this.points[i]["bonus"] = this.points[i+1]["value1"];
+			this.bono += this.points[i+1]["value1"];
 		}
+
 	}
 	return this.bono;
 };
