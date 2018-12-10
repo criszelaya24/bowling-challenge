@@ -11,17 +11,10 @@ function Bowling() {
 	this.test = 0;
 }
 
+var bowling = new Bowling();
+
 Bowling.prototype.getCurrentFrame = function() {
 	return this.currentFrame
-};
-
-Bowling.prototype.totalScore = function() {
-	for (var i = 0; i < this.points.length; i++) {
-			this.total += this.points[i]["value1"];
-			this.total += this.points[i]["value2"];
-
-	}
-	return this.total;
 };
 
 Bowling.prototype.score = function(shot_1 = 0 , shot_2 = 0 ) {
@@ -43,17 +36,30 @@ Bowling.prototype.score = function(shot_1 = 0 , shot_2 = 0 ) {
 	}
 };
 
+Bowling.prototype.totalScore = function() {
+	for (var i = 0; i < this.points.length; i++) {
+			this.total += this.points[i]["value1"];
+			this.total += this.points[i]["value2"];
+
+	}
+	return this.total;
+};
+
 Bowling.prototype.bonus = function() {
 	for (var i = 0; i < this.points.length; i++) {
 		this.test = 0;
 		this.test += this.points[i]["value1"];
 		this.test += this.points[i]["value2"];
 		if (this.test === this.totalRolls) {
-			this.points[i]["bonus"] = this.points[i+1]["value1"];
-			this.bono += this.points[i+1]["value1"];
+			if (i === 9) {
+				this.points[i]["bonus"] = 10;
+			}else{
+				this.points[i]["bonus"] = this.points[i+1]["value1"];
+			}
 		}
-
+		this.bono += this.points[i]["bonus"];
 	}
+	this.total += this.bono;
 	return this.bono;
 };
 

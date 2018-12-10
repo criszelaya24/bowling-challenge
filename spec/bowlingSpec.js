@@ -44,9 +44,11 @@ describe('Game', function(){
 	});
 
 	it('Can have a perfect game', function(){
-		bowling.score(5,0)
-		bowling.score(2,3)
-		bowling.score(10)
-		expect(bowling.totalScore()).toEqual(300);
+		for (var i = 0; i < 10; i++) {
+			bowling.score(10,0)
+		}
+		bowling.totalScore();
+		bowling.bonus();
+		expect(bowling.total).toEqual(200);
 	});
 });
